@@ -1,4 +1,4 @@
-# 🚀 Startup Success Predictor
+# 🚀 Startup Success Prediction
 
 A machine learning web application that predicts whether a startup is likely to be **Acquired (Success)** or **Closed (Fail)** using startup funding, investment, milestone, and company-related features.
 
