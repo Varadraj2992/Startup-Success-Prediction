@@ -1,7 +1,7 @@
 __pycache__/
 *.pyc
-.venv/
+*.pkl
+*.csv
 venv/
 .env
-.vscode/
 .DS_Store
