@@ -22,7 +22,14 @@ The current target labels are:
 
 ---
 
-## 2. Features
+## 2. Project Goals
+
+- Demonstrate an end-to-end machine learning workflow through an interactive web application.
+- Explore how funding, investor backing, and milestone activity relate to startup outcomes in the supplied historical dataset.
+- Make model predictions easier to inspect with diagnostics, feature importance, and SHAP explanations.
+- Provide practical tools for comparing startup profiles and analyzing uploaded batches.
+
+## 3. Features
 
 ### Individual startup analysis
 
@@ -49,7 +56,7 @@ The current target labels are:
 
 ---
 
-## 3. Screenshots
+## 4. Screenshots
 
 Screenshots are not included in the repository yet. Add genuine captures of the running app under `docs/screenshots/`, then embed them here. Useful views to capture:
 
@@ -65,7 +72,7 @@ For example, after adding `docs/screenshots/prediction-dashboard.png`, embed it 
 
 ---
 
-## 4. Model and Evaluation
+## 5. Model and Evaluation
 
 The app trains an `XGBClassifier` with regularization settings intended to limit model complexity:
 
@@ -95,7 +102,7 @@ Metrics are specific to the included data and evaluation setup; they should not 
 
 ---
 
-## 5. Input Data
+## 6. Input Data
 
 The app reads `startup data.csv` from the project directory. The dataset should include a `status` target column with `acquired` and `closed` values. Rows with other or missing target values are excluded from training.
 
@@ -119,7 +126,7 @@ Numeric values that are missing in the training data are filled with column medi
 
 ---
 
-## 6. Project Structure
+## 7. Project Structure
 
 ```text
 Startup-Success-Prediction/
@@ -138,7 +145,14 @@ The application currently lives in `test_2.py`, so use that filename when launch
 
 ---
 
-## 7. Technology Stack
+## 8. Repository
+
+- **GitHub:** [Varadraj2992/Startup-Success-Prediction](https://github.com/Varadraj2992/Startup-Success-Prediction)
+- **Application entry point:** `test_2.py`
+
+---
+
+## 9. Technology Stack
 
 - **Language:** Python
 - **App framework:** Streamlit
@@ -150,16 +164,16 @@ The application currently lives in `test_2.py`, so use that filename when launch
 
 ---
 
-## 8. Getting Started
+## 10. Getting Started
 
-### 8.1 Clone the repository
+### 10.1 Clone the repository
 
 ```bash
 git clone https://github.com/Varadraj2992/Startup-Success-Prediction.git
 cd Startup-Success-Prediction
 ```
 
-### 8.2 Create and activate a virtual environment
+### 10.2 Create and activate a virtual environment
 
 Windows PowerShell:
 
@@ -175,7 +189,7 @@ python -m venv .venv
 source .venv/bin/activate
 ```
 
-### 8.3 Install dependencies
+### 10.3 Install dependencies
 
 ```bash
 python -m pip install --upgrade pip
@@ -184,7 +198,7 @@ pip install -r requirements.txt
 
 ---
 
-## 9. Run the Application
+## 11. Run the Application
 
 From the repository root, start the Streamlit app:
 
@@ -202,7 +216,7 @@ The included `startup data.csv` must remain in the project directory unless the 
 
 ---
 
-## 10. Using the App
+## 12. Using the App
 
 1. Start the app using the command above.
 2. Enter startup attributes for an individual prediction, or use the what-if simulator to explore a scenario.
@@ -213,16 +227,28 @@ The included `startup data.csv` must remain in the project directory unless the 
 
 ---
 
-## 11. Generated Files
+## 13. Generated Files
 
 During use, the application writes the trained model and model statistics to `startup_model.pkl` and `startup_stats.pkl`. Individual predictions can also update `last_input_example.csv`. These are local serialized or data artifacts; only load pickle files from sources you trust.
 
 ---
 
-## 12. Limitations
+## 14. Limitations
 
 - The model is trained on the supplied historical dataset and may not generalize to other populations or time periods.
 - Predictions reflect associations in the data; they do not establish that a funding or company attribute causes an acquisition.
 - The application expects the `status` target and the feature names documented above.
 - The recommendation engine uses simple median-based rules and should be treated as guidance for exploration, not professional business advice.
 - This project is a research/demo application, not a production decision system.
+
+---
+
+## 15. License
+
+No license file is currently included in this repository. Until a license is added, standard copyright applies; do not assume that reuse, modification, or redistribution is permitted. The repository owner should add a `LICENSE` file to specify the project’s terms.
+
+---
+
+## 16. Author
+
+Maintained by [Varadraj2992](https://github.com/Varadraj2992). Visit the [GitHub profile](https://github.com/Varadraj2992) for project updates and contact options.
