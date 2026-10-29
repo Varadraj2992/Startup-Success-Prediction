@@ -142,4 +142,4 @@ This project is intended for educational and portfolio use.
 
 ## 👨‍💻 Author
 
-Add your name and profile links here if you want to personalize the project.
+Add your name and profile links here if you want to personalize the project
