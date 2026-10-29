@@ -281,14 +281,8 @@ Automated CI, a dedicated test suite, and formal linting are not currently docum
 
 ## 17. Repository
 
-- **GitHub repository:** [Varadraj2992/Startup-Success-Prediction](https://github.com/Varadraj2992/Startup-Success-Prediction)
-- **Application entry point:** `test_2.py`
-- **Training dataset:** `startup data.csv`
-- **Dependency list:** `requirements.txt`
+GitHub Repository:
 
-Clone the repository:
+[https://github.com/Varadraj2992/Startup-Success-Prediction](https://github.com/Varadraj2992/Startup-Success-Prediction)
 
-```bash
-git clone https://github.com/Varadraj2992/Startup-Success-Prediction.git
-cd Startup-Success-Prediction
-```
+Startup Success Prediction is developed as a portfolio project demonstrating practical skills in Python, machine learning, data analytics, Streamlit application development, model explainability, and software engineering.
