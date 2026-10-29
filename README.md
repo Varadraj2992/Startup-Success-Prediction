@@ -1,145 +1,207 @@
-# 🚀 Startup Success Prediction
+# Startup Success Prediction
 
-A machine learning web app that predicts whether a startup is likely to be **Acquired (Success)** or **Closed (Fail)** based on startup funding, investor backing, milestone activity, and company-level traits.
+A Streamlit application that estimates whether a startup is likely to be acquired or closed using its funding history, investor backing, milestones, and other company-level indicators. The project combines a regularized XGBoost classifier with interactive predictions, model diagnostics, and explanations.
 
-This project is built with **Python, Streamlit, XGBoost, Scikit-learn, SHAP, Pandas, NumPy, and Matplotlib**.
+> This project is intended for educational and portfolio use. Predictions are estimates based on historical data, not investment advice or a guarantee of future outcomes.
 
-## ✨ Features
+---
 
-- Single-startup prediction
-- Batch prediction via CSV upload
-- What-if scenario simulator
-- Startup comparison dashboard
-- SHAP-based local explanations
-- Recommendation engine for startup improvements
-- Investor-style report export
-- Portfolio dashboard with filters and summary charts
-- Automatic handling of missing values using medians
-- Model training and evaluation metrics
-- Persistence of trained model and stats as `.pkl` files
+## 1. Overview
 
-## 🧠 Model and Approach
+Startup Success Prediction provides an interactive workflow for exploring startup outcomes. The app trains a classification model from the included dataset and lets users evaluate individual startup profiles, compare scenarios, and analyze batches of startups.
 
-The app trains an **XGBoost Classifier** with regularization settings designed to reduce overfitting, including:
+The current target labels are:
 
-- `max_depth = 3`
-- `learning_rate = 0.03`
-- `n_estimators = 200`
-- `subsample = 0.6`
-- `colsample_bytree = 0.6`
-- `reg_alpha = 2.0`
-- `reg_lambda = 5.0`
-- `min_child_weight = 8`
-- `scale_pos_weight` based on class imbalance
+- `acquired` — success (`1`)
+- `closed` — failure (`0`)
 
-The model is evaluated using:
+---
 
-- Accuracy
+## 2. Features
+
+### Individual startup analysis
+
+- Predict an acquisition probability and outcome from startup attributes
+- Generate rule-based recommendations using dataset medians
+- Download a plain-text investor report
+- View global model feature importance
+- Explore a local SHAP explanation and a plain-English summary
+
+### Batch and portfolio analysis
+
+- Upload a CSV of startup features and download predictions
+- Review the highest-probability predictions and probability charts
+- Download a batch summary report with recommendations
+- Filter results by success probability and funding amount
+- Review predicted outcome counts and the average probability for the filtered portfolio
+
+### Scenario and model diagnostics
+
+- Change startup attributes in a what-if simulator and compare the resulting prediction
+- Compare two startup profiles side by side
+- Review test-set accuracy diagnostics, a confusion matrix, ROC-AUC, and a learning curve
+- Inspect five-fold cross-validation results during model preparation
+
+---
+
+## 3. Model and Evaluation
+
+The app trains an `XGBClassifier` with regularization settings intended to limit model complexity:
+
+| Parameter | Value |
+|---|---:|
+| Estimators | 200 |
+| Learning rate | 0.03 |
+| Maximum tree depth | 3 |
+| Subsample | 0.6 |
+| Column subsample | 0.6 |
+| L1 regularization (`reg_alpha`) | 2.0 |
+| L2 regularization (`reg_lambda`) | 5.0 |
+| Minimum child weight | 8 |
+| Positive-class weight | Calculated from the training split |
+
+The dataset is split into training and test sets using an 80/20 stratified split. The app reports or visualizes:
+
+- Test accuracy and train-versus-test accuracy
+- Five-fold stratified cross-validation accuracy
 - Confusion matrix
-- ROC-AUC
-- 5-fold cross-validation
+- ROC-AUC and ROC curve
 - Learning curve
-- Train vs. test accuracy comparison
+- Feature importance
+- SHAP-based local feature contributions
 
-## 📊 Important Features
+Metrics are specific to the included data and evaluation setup; they should not be interpreted as guarantees of performance on new or future startups.
 
-The model uses the following startup features when present in the dataset:
+---
 
-- `has_VC`
-- `has_angel`
-- `has_roundA`
-- `has_roundB`
-- `has_roundC`
-- `has_roundD`
-- `funding_rounds`
-- `funding_total_usd`
-- `avg_participants`
-- `is_top500`
-- `milestones`
+## 4. Input Data
 
-Target:
+The app reads `startup data.csv` from the project directory. The dataset should include a `status` target column with `acquired` and `closed` values. Rows with other or missing target values are excluded from training.
 
-- `acquired` → Success (`1`)
-- `closed` → Failure (`0`)
+The model uses these feature columns when present:
 
-## 🚀 Run the App
+| Feature | Description |
+|---|---|
+| `has_VC` | Venture-capital backing indicator |
+| `has_angel` | Angel-investor backing indicator |
+| `has_roundA` | Series A funding indicator |
+| `has_roundB` | Series B funding indicator |
+| `has_roundC` | Series C funding indicator |
+| `has_roundD` | Series D funding indicator |
+| `funding_rounds` | Number of funding rounds |
+| `funding_total_usd` | Total funding in USD |
+| `avg_participants` | Average number of participants |
+| `is_top500` | Top-500 indicator |
+| `milestones` | Number of milestones |
 
-Install dependencies:
+Numeric values that are missing in the training data are filled with column medians. Binary indicators are normalized to numeric values. For batch uploads, include the feature columns above; missing feature columns are filled with `0`.
+
+---
+
+## 5. Project Structure
+
+```text
+Startup-Success-Prediction/
+├── test_2.py                # Streamlit application entry point
+├── startup data.csv         # Training dataset
+├── last_input_example.csv   # Example/saved individual input
+├── requirements.txt         # Python dependencies
+├── startup_model.pkl        # Saved trained model
+├── startup_stats.pkl        # Saved model statistics
+├── encoders.pkl             # Serialized project artifact
+├── .gitignore
+└── README.md
+```
+
+The application currently lives in `test_2.py`, so use that filename when launching Streamlit.
+
+---
+
+## 6. Technology Stack
+
+- **Language:** Python
+- **App framework:** Streamlit
+- **Data processing:** Pandas, NumPy
+- **Machine learning:** XGBoost, Scikit-learn
+- **Model explainability:** SHAP
+- **Visualization:** Matplotlib
+- **Model persistence:** Pickle
+
+---
+
+## 7. Getting Started
+
+### 7.1 Clone the repository
 
 ```bash
+git clone https://github.com/Varadraj2992/Startup-Success-Prediction.git
+cd Startup-Success-Prediction
+```
+
+### 7.2 Create and activate a virtual environment
+
+Windows PowerShell:
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+```
+
+macOS/Linux:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+```
+
+### 7.3 Install dependencies
+
+```bash
+python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-Run the project:
+---
+
+## 8. Run the Application
+
+From the repository root, start the Streamlit app:
 
 ```bash
-streamlit run app.py
+streamlit run test_2.py
 ```
 
-## 📁 Project Structure
+Open the local URL printed by Streamlit, typically:
 
 ```text
-Mini_Project/
-├── app.py
-├── startup data.csv
-├── requirements.txt
-├── README.md
-├── startup_model.pkl
-├── startup_stats.pkl
-├── last_input_example.csv
-├── encoders.pkl
-└── .gitignore
+http://localhost:8501
 ```
 
-## 🔍 How to Use
+The included `startup data.csv` must remain in the project directory unless the dataset path in the application is changed.
 
-1. Place your dataset as `startup data.csv` in the project folder.
-2. Run the Streamlit app.
-3. Use the app to:
-   - predict a single startup
-   - upload a batch of startups
-   - test a what-if scenario
-   - compare startups
-   - read SHAP explanations
-   - review recommendations
-   - export an investor report
-   - review portfolio-level trends
+---
 
-## 💡 Extra Features Added
+## 9. Using the App
 
-This version includes:
+1. Start the app using the command above.
+2. Enter startup attributes for an individual prediction, or use the what-if simulator to explore a scenario.
+3. Review the predicted outcome, probability, recommendations, and available explanations.
+4. Upload a CSV containing startup feature columns for batch predictions.
+5. Use the portfolio filters to explore the batch results and download prediction or report files.
+6. Compare two startup profiles using the comparison dashboard.
 
-- CSV upload for batch prediction
-- Scenario simulation for changing startup inputs
-- Startup comparison dashboard
-- Recommendation engine
-- Investor report in plain text format
-- Portfolio dashboard with filters and charts
-- Batch recommendation summaries
+---
 
-## 🛠️ Tech Stack
+## 10. Generated Files
 
-- Python
-- Streamlit
-- Pandas
-- NumPy
-- Scikit-learn
-- XGBoost
-- SHAP
-- Matplotlib
-- Pickle
+During use, the application writes the trained model and model statistics to `startup_model.pkl` and `startup_stats.pkl`. Individual predictions can also update `last_input_example.csv`. These are local serialized or data artifacts; only load pickle files from sources you trust.
 
-## ⚠️ Notes
+---
 
-- The dataset should contain a `status` column with values like `acquired` and `closed`.
-- Only matching feature columns are used automatically.
-- Missing numeric values are filled using medians from the dataset.
-- Generated model files can be ignored in Git if desired.
+## 11. Limitations
 
-## 📄 License
-
-This project is intended for educational and portfolio use.
-
-## 👨‍💻 Author
-
-Add your name and profile links here if you want to personalize the project
+- The model is trained on the supplied historical dataset and may not generalize to other populations or time periods.
+- Predictions reflect associations in the data; they do not establish that a funding or company attribute causes an acquisition.
+- The application expects the `status` target and the feature names documented above.
+- The recommendation engine uses simple median-based rules and should be treated as guidance for exploration, not professional business advice.
+- This project is a research/demo application, not a production decision system.
