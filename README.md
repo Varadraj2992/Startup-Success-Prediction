@@ -243,8 +243,6 @@ Interests reflected in this project:
 - Data analytics and visualization
 - Explainable AI
 
-Visit [Varadraj2992 on GitHub](https://github.com/Varadraj2992) for project updates and contact options.
-
 ---
 
 ## 14. License
