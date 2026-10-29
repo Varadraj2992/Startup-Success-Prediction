@@ -1,195 +1,145 @@
-# 🚀 Startup Success Predictor
+# 🚀 Startup Success Prediction
 
-A machine learning web application that predicts whether a startup is likely to be **Acquired (Success)** or **Closed (Fail)** using startup funding, investment, milestone, and company-related features.
+A machine learning web app that predicts whether a startup is likely to be **Acquired (Success)** or **Closed (Fail)** based on startup funding, investor backing, milestone activity, and company-level traits.
 
-The application is built with **Python, XGBoost, Scikit-learn, SHAP, Pandas, Matplotlib, and Streamlit**.
+This project is built with **Python, Streamlit, XGBoost, Scikit-learn, SHAP, Pandas, NumPy, and Matplotlib**.
 
 ## ✨ Features
 
-- Startup success/failure prediction
-- XGBoost classification model
-- Strong L1/L2 regularization to reduce overfitting
-- Class imbalance handling with `scale_pos_weight`
-- Train/test accuracy comparison
-- 5-fold cross-validation
-- Confusion matrix
-- ROC curve and ROC-AUC score
-- Learning curve
-- Global feature importance
-- SHAP-based local explanations for individual predictions
-- Automatic handling of missing numeric values using medians
-- Saves the trained model and statistics as `.pkl` files
-- Saves the latest prediction input as `last_input_example.csv`
+- Single-startup prediction
+- Batch prediction via CSV upload
+- What-if scenario simulator
+- Startup comparison dashboard
+- SHAP-based local explanations
+- Recommendation engine for startup improvements
+- Investor-style report export
+- Portfolio dashboard with filters and summary charts
+- Automatic handling of missing values using medians
+- Model training and evaluation metrics
+- Persistence of trained model and stats as `.pkl` files
 
-## 🧠 Machine Learning Model
+## 🧠 Model and Approach
 
-The project uses an **XGBoost Classifier** with relatively shallow trees and stronger regularization.
+The app trains an **XGBoost Classifier** with regularization settings designed to reduce overfitting, including:
 
-Key configuration includes:
-
-- `n_estimators = 200`
-- `learning_rate = 0.03`
 - `max_depth = 3`
+- `learning_rate = 0.03`
+- `n_estimators = 200`
 - `subsample = 0.6`
 - `colsample_bytree = 0.6`
 - `reg_alpha = 2.0`
 - `reg_lambda = 5.0`
 - `min_child_weight = 8`
-- `scale_pos_weight` calculated from the training data
+- `scale_pos_weight` based on class imbalance
 
-These settings are intended to control model complexity and reduce overfitting.
+The model is evaluated using:
 
-## 📊 Input Features
+- Accuracy
+- Confusion matrix
+- ROC-AUC
+- 5-fold cross-validation
+- Learning curve
+- Train vs. test accuracy comparison
 
-The model uses the following features when they are available in the dataset:
+## 📊 Important Features
 
-| Feature | Description |
-|---|---|
-| `has_VC` | Whether the startup has VC funding |
-| `has_angel` | Whether the startup has angel funding |
-| `has_roundA` | Whether the startup received Series A funding |
-| `has_roundB` | Whether the startup received Series B funding |
-| `has_roundC` | Whether the startup received Series C funding |
-| `has_roundD` | Whether the startup received Series D funding |
-| `funding_rounds` | Number of funding rounds |
-| `funding_total_usd` | Total funding raised in USD |
-| `avg_participants` | Average number of investors per funding round |
-| `is_top500` | Whether the company is a Top 500 company |
-| `milestones` | Number of major milestones |
+The model uses the following startup features when present in the dataset:
 
-The target column is:
+- `has_VC`
+- `has_angel`
+- `has_roundA`
+- `has_roundB`
+- `has_roundC`
+- `has_roundD`
+- `funding_rounds`
+- `funding_total_usd`
+- `avg_participants`
+- `is_top500`
+- `milestones`
+
+Target:
 
 - `acquired` → Success (`1`)
 - `closed` → Failure (`0`)
 
-## 📁 Project Structure
+## 🚀 Run the App
 
-```text
-startup-success-predictor/
-│
-├── test_2.py
-├── startup data.csv
-├── requirements.txt
-├── README.md
-│
-├── startup_model.pkl          # Generated after running the app
-├── startup_stats.pkl          # Generated after running the app
-└── last_input_example.csv     # Generated after making a prediction
-```
-
-> Keep `startup data.csv` in the same directory as `test_2.py`, or update the `DATA_FILE` variable in the Python file.
-
-## ⚙️ Installation
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
-cd YOUR_REPOSITORY
-```
-
-### 2. Create a virtual environment
-
-**Windows:**
-
-```bash
-python -m venv venv
-venv\Scripts\activate
-```
-
-**macOS/Linux:**
-
-```bash
-python3 -m venv venv
-source venv/bin/activate
-```
-
-### 3. Install dependencies
+Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## ▶️ Run the Application
-
-Start the Streamlit application with:
+Run the project:
 
 ```bash
-streamlit run test_2.py
+streamlit run app.py
 ```
 
-The application will open in your browser.
+## 📁 Project Structure
 
-## 🔮 How to Use
+```text
+Mini_Project/
+├── app.py
+├── startup data.csv
+├── requirements.txt
+├── README.md
+├── startup_model.pkl
+├── startup_stats.pkl
+├── last_input_example.csv
+├── encoders.pkl
+└── .gitignore
+```
 
-1. Place `startup data.csv` in the project directory.
-2. Start the Streamlit application.
-3. Enter the startup's funding and business information.
-4. Click **Predict**.
-5. The application displays:
-   - Predicted outcome
-   - Probability of success
-   - Global feature importance
-   - Confusion matrix
-   - ROC-AUC
-   - Learning curve
-   - SHAP explanation showing which features influenced the prediction
+## 🔍 How to Use
 
-## 📈 Model Evaluation
+1. Place your dataset as `startup data.csv` in the project folder.
+2. Run the Streamlit app.
+3. Use the app to:
+   - predict a single startup
+   - upload a batch of startups
+   - test a what-if scenario
+   - compare startups
+   - read SHAP explanations
+   - review recommendations
+   - export an investor report
+   - review portfolio-level trends
 
-The application evaluates the model using:
+## 💡 Extra Features Added
 
-- Accuracy
-- Classification report
-- Confusion matrix
-- ROC-AUC
-- 5-fold stratified cross-validation
-- Learning curve
-- Train vs. test accuracy gap
+This version includes:
 
-This makes the project useful not only as a prediction application but also as a demonstration of model evaluation and explainable AI.
+- CSV upload for batch prediction
+- Scenario simulation for changing startup inputs
+- Startup comparison dashboard
+- Recommendation engine
+- Investor report in plain text format
+- Portfolio dashboard with filters and charts
+- Batch recommendation summaries
 
-## 🔍 Explainable AI with SHAP
+## 🛠️ Tech Stack
 
-SHAP (SHapley Additive exPlanations) is used to explain individual predictions.
+- Python
+- Streamlit
+- Pandas
+- NumPy
+- Scikit-learn
+- XGBoost
+- SHAP
+- Matplotlib
+- Pickle
 
-The application shows:
+## ⚠️ Notes
 
-- Features pushing the prediction toward **success**
-- Features pushing the prediction toward **failure**
-- A SHAP waterfall visualization
-
-This helps make the machine learning prediction more interpretable.
-
-## 🛠️ Technologies Used
-
-- **Python** — Programming language
-- **Streamlit** — Interactive web application
-- **Pandas** — Data processing
-- **NumPy** — Numerical operations
-- **Scikit-learn** — Model evaluation and cross-validation
-- **XGBoost** — Machine learning model
-- **SHAP** — Explainable AI
-- **Matplotlib** — Data visualization
-- **Pickle** — Model/statistics persistence
-
-## ⚠️ Important Notes
-
-- The dataset must contain a `status` column with values such as `acquired` and `closed`.
-- Feature names in the CSV should match the feature names expected by the application.
-- The application automatically uses only the expected features that are present in the CSV.
-- Missing numeric values are filled using the median calculated from the dataset.
-- The generated `.pkl` files do not need to be committed to GitHub unless you specifically want to distribute the trained model.
-- For a public GitHub repository, consider adding large datasets and generated model files to `.gitignore`.
+- The dataset should contain a `status` column with values like `acquired` and `closed`.
+- Only matching feature columns are used automatically.
+- Missing numeric values are filled using medians from the dataset.
+- Generated model files can be ignored in Git if desired.
 
 ## 📄 License
 
-This project is intended for educational, portfolio, and demonstration purposes. Add a license such as MIT if you want others to reuse the code under explicit terms.
+This project is intended for educational and portfolio use.
 
 ## 👨‍💻 Author
 
-**Your Name**
-
-GitHub: `https://github.com/YOUR_USERNAME`
-
-LinkedIn: `https://www.linkedin.com/in/YOUR_PROFILE/`
+Add your name and profile links here if you want to personalize the project.
