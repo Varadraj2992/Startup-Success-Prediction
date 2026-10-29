@@ -235,14 +235,13 @@ During use, the application writes the trained model and model statistics to `st
 
 M.Sc. Data Science & Big Data Analytics
 
-Areas of interest:
+Interests reflected in this project:
 
-- Data Analytics
-- Data Science
-- Machine Learning
-- Quantitative Finance
-- Business Intelligence
-- Big Data Analytics
+- Startup analytics and outcome prediction
+- Applied machine learning
+- Predictive modeling and model evaluation
+- Data analytics and visualization
+- Explainable AI
 
 Visit [Varadraj2992 on GitHub](https://github.com/Varadraj2992) for project updates and contact options.
 
